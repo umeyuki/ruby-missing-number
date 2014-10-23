@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'pry'
 describe MissingNumber do
 
   describe :parse do
