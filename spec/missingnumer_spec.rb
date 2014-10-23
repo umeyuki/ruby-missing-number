@@ -9,27 +9,27 @@ describe MissingNumber do
       end
 
       context 'Success' do
-        it 'should be return 2' do
+        it 'should return 2' do
           expected = @numbers.delete(2)
           expect(MissingNumber.parse(@numbers.to_s)).to eq(expected)
         end
 
-        it 'should be return 12' do
+        it 'should return 12' do
           expected = @numbers.delete(12)
           expect(MissingNumber.parse(@numbers.to_s)).to eq(expected)
         end
 
-        it 'should be return 123' do
+        it 'should return 123' do
           expected = @numbers.delete(123)
           expect(MissingNumber.parse(@numbers.to_s)).to eq(expected)
         end
 
-        it 'should be return 1234' do
+        it 'should return 1234' do
           expected = @numbers.delete(1234)
           expect(MissingNumber.parse(@numbers.to_s)).to eq(expected)
         end
 
-        it 'should be return 10000' do
+        it 'should return 10000' do
           expected = @numbers.delete(10000)
           expect(MissingNumber.parse(@numbers.to_s)).to eq(expected)
         end
@@ -52,7 +52,7 @@ describe MissingNumber do
 
     context 'IO argument' do
       context 'Success' do
-        it 'should be return 9380 from file' do
+        it 'should return 9380 from file' do
           missing_num = 9380
           io = File.open("#{File.dirname(__FILE__)}/successed_9380.txt")
           numbers = eval io.gets
@@ -65,11 +65,11 @@ describe MissingNumber do
       end
 
       context 'Error' do
-        it 'should be return type error from file' do
+        it 'should return type error from file' do
           expect{MissingNumber.parse(File.open("#{File.dirname(__FILE__)}/failed_few_elements.txt"))}.to raise_error("Number should be 9,999 elements")  
         end
         
-        it 'should be return size error from file' do
+        it 'should return size error from file' do
           expect{MissingNumber.parse(File.open("#{File.dirname(__FILE__)}/failed_include_string.txt"))}.to raise_error("Numbers should be Fixnum")  
         end
       end
