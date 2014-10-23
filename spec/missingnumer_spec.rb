@@ -65,7 +65,7 @@ describe MissingNumber do
       end
 
       context 'Error' do
-        it 'should be return type error' do
+        it 'should be return type error from file' do
           expect{MissingNumber.parse(File.open("#{File.dirname(__FILE__)}/failed_few_elements.txt"))}.to raise_error("Number should be 9,999 elements")  
         end
         
