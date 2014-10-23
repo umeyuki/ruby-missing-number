@@ -14,7 +14,7 @@ module MissingNumber
   private
   
   def parse_string(string)
-    numbers = to_array (string)
+    numbers = eval string
     validate(numbers)
     ignore_number(numbers)
   rescue => e 
@@ -24,24 +24,20 @@ module MissingNumber
   def parse_io(io)
     parse_string(io.gets)
   end
-
-  def to_array(string)
-    eval string
-  end
   
   def ignore_number(numbers)
     @@total_sum - numbers.inject(:+)
   end
 
   def validate(numbers)
-    abort "Number need 9999 element" if numbers.size != 9999
-    abort "Number need between 1 and 10000" if numbers.find_all {|num| num.class == String }.any?
+    raise "Number should be 9,999 elements" if numbers.size != 9999
+    raise "Numbers should be Fixnum" if numbers.find_all {|num| num.class != Fixnum }.any?
   end
   
-  module_function :parse,:parse_io, :parse_string
+  module_function :parse,:parse_io, :parse_string, :validate, :ignore_number
   
   class <<self
-    private :parse_io, :parse_string
+    private :parse_io, :parse_string, :validate, :ignore_number
   end
   
 end
