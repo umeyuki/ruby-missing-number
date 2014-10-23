@@ -1,0 +1,22 @@
+require 'missingnumber'
+
+def usage
+  puts "Usage: #{File.basename($0)} number_array | file_name"
+  exit 1
+end
+
+io_or_string =  ARGV[0]
+usage unless io_or_string
+
+if io_or_string.match(%r{\[.+\]})
+  print MissingNumber.parse(io_or_string)
+else
+  begin
+    io = File.open(io_or_string)
+    print MissingNumber.parse(io)
+  rescue Errno::ENOENT
+    puts "no such a file"
+  end
+end     
+
+
