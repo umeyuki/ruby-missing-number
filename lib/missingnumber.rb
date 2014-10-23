@@ -17,8 +17,6 @@ module MissingNumber
     numbers = eval string
     validate(numbers)
     ignore_number(numbers)
-  rescue => e 
-    puts e.message
   end
   
   def parse_io(io)

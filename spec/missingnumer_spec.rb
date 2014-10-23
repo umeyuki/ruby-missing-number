@@ -10,57 +10,70 @@ describe MissingNumber do
       end
 
       context 'Success' do
-        it 'should be 2' do
+        it 'should be return 2' do
           expected = @numbers.delete(2)
           expect(MissingNumber.parse(@numbers.to_s)).to eq(expected)
         end
 
-        it 'should be 12' do
+        it 'should be return 12' do
           expected = @numbers.delete(12)
           expect(MissingNumber.parse(@numbers.to_s)).to eq(expected)
         end
 
-        it 'should be 123' do
+        it 'should be return 123' do
           expected = @numbers.delete(123)
           expect(MissingNumber.parse(@numbers.to_s)).to eq(expected)
         end
 
-        it 'should be 1234' do
+        it 'should be return 1234' do
           expected = @numbers.delete(1234)
           expect(MissingNumber.parse(@numbers.to_s)).to eq(expected)
         end
 
-        it 'should be 10000' do
-          expected = @numbers.delete(1234)
+        it 'should be return 10000' do
+          expected = @numbers.delete(10000)
           expect(MissingNumber.parse(@numbers.to_s)).to eq(expected)
         end
       end
 
-      # context 'Error' do
+      context 'Error' do
 
-      #   it 'should return size error' do
-      #     @numbers = (1..9999).to_a.shuffle
-      #     expect{MissingNumber.parse(@numbers)}.to raise_error("Number should be 9,999 elements")  
-      #   end
+        it 'should return size error' do
+          expect{MissingNumber.parse(@numbers.to_s)}.to raise_error("Number should be 9,999 elements")  
+        end
 
-      #   it 'should return type error' do
-      #     @numbers = (1..9999).to_a.shuffle
-      #     @numbers.delete(1234)
-      #     @numbers.push("1234")
-      #     expect{MissingNumber.parse(@numbers)}.to raise_error("Numbers should be Fixnum")  
-      #   end
-        
-      # end
-
-      
+        it 'should return type error' do
+          @numbers = (1..9999).to_a.shuffle
+          @numbers.delete(1234)
+          @numbers.push("1234")
+          expect{MissingNumber.parse(@numbers.to_s)}.to raise_error("Numbers should be Fixnum")  
+        end
+      end
     end
 
-    # context 'IO argument' do
-    #   it 'should be 9999' do
-    #     expect(MissingNumber.parse(File.open("#{File.dirname(__FILE__)}/test.txt"))).to eq(9999)
-    #   end
-    # end
-  end
+    context 'IO argument' do
+      context 'Success' do
+        it 'should be return 9380 from file' do
+          missing_num = 9380
+          io = File.open("#{File.dirname(__FILE__)}/successed_9380.txt")
+          numbers = eval io.gets
+          expect(numbers.size).to eq(9999)
+          expect(numbers.grep(/#{missing_num}/).empty?).to be true
 
-  
+          io.rewind
+          expect(MissingNumber.parse(io)).to eq(missing_num)
+        end
+      end
+
+      context 'Error' do
+        it 'should be return type error' do
+          expect{MissingNumber.parse(File.open("#{File.dirname(__FILE__)}/failed_few_elements.txt"))}.to raise_error("Number should be 9,999 elements")  
+        end
+        
+        it 'should be return size error from file' do
+          expect{MissingNumber.parse(File.open("#{File.dirname(__FILE__)}/failed_include_string.txt"))}.to raise_error("Numbers should be Fixnum")  
+        end
+      end
+    end
+  end
 end
