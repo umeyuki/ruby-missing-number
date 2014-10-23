@@ -38,7 +38,7 @@ module MissingNumber
     abort "Number need between 1 and 10000" if numbers.find_all {|num| num.class == String }.any?
   end
   
-  module_function :parse_io, :parse_string
+  module_function :parse,:parse_io, :parse_string
   
   class <<self
     private :parse_io, :parse_string
